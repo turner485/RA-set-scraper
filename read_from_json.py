@@ -2,6 +2,7 @@ from make_request import write_to_file
 from helpers import *
 import json
 import requests
+import os
 from dotenv import load_dotenv  
 load_dotenv()
 

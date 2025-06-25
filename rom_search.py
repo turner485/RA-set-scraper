@@ -1,57 +1,60 @@
-
 import json
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+from helpers import rom_sources
 import os
-
-rom_sources = {
-    "Game Boy Advance": "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Advance/",
-    "Game Boy Color": "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Color/",
-    "Nintendo - Game Boy": "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy/",
-    "Nintendo - Super Nintendo Entertainment System": "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/",
-    "NES/Famicom": "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20(Headered)/",
-    "Arcade": "https://myrient.erista.me/files/Internet%20Archive/chadmaster/fbnarcade-fullnonmerged/arcade/"
-}
 
 def find_rom_url(games):
     for game in games:
         console = game['console']
         title = game['title']
 
-        source_url = rom_sources.get(console)
-        if not source_url:
+        source_urls = rom_sources.get(console)
+
+        if not source_urls:
             print(f"⚠️ No ROM source for console: {console}")
             continue
 
+        # Make sure it's a list
+        if isinstance(source_urls, str):
+            source_urls = [source_urls]
+
         print(f"\n🔍 Searching for: {title}")
-        try:
-            response = requests.get(source_url)
-            soup = BeautifulSoup(response.content, 'html.parser')
-            td_tags = soup.find_all('td', class_='link')
+        found = False
 
-            found = False
-            for td in td_tags:
-                a_tag = td.find('a')
-                if a_tag:
-                    link_title = a_tag.get('title') or a_tag.text  # Prefer title attribute, fallback to text
-                    href = a_tag.get('href')
+        for url in source_urls:
+            try:
+                response = requests.get(url)
+                response.raise_for_status()  # Raise an error if bad response
 
-                    # Normalize casing for comparison
-                    if title.lower() in link_title.lower():
-                        full_url = urljoin(source_url, href)
-                        filename = os.path.basename(href)
+                print(f"🌐 Accessing: {url}")
+                soup = BeautifulSoup(response.content, 'html.parser')
+                td_tags = soup.find_all('td', class_='link')
 
-                        print(f"✅ Match found: {filename}")
-                        download_rom(full_url, filename)
-                        found = True
-                        break
+                for td in td_tags:
+                    a_tag = td.find('a')
+                    if a_tag:
+                        link_title = a_tag.get('title') or a_tag.text
+                        href = a_tag.get('href')
 
-            if not found:
-                print("❌ No match found on page.")
+                        if title.lower() in link_title.lower():
+                            full_url = urljoin(url, href)
+                            filename = os.path.basename(href)
 
-        except Exception as e:
-            print(f"🚨 Error while processing '{title}': {e}")
+                            print(f"✅ Match found: {filename}")
+                            download_rom(full_url, filename)
+                            found = True
+                            break
+
+                if found:
+                    break  # Exit loop if we found the ROM
+
+            except Exception as e:
+                print(f"❌ Error accessing or parsing {url}: {e}")
+
+        if not found:
+            print("❌ No match found in any source.")
 
 def download_rom(full_url, filename):
     print(f"⬇️ Downloading from {full_url} ...")
@@ -59,11 +62,9 @@ def download_rom(full_url, filename):
         response = requests.get(full_url)
         response.raise_for_status()
 
-        # Ensure the /roms directory exists
         os.makedirs("roms", exist_ok=True)
-
-        # Write the file to the directory
         filepath = os.path.join("roms", filename)
+
         with open(filepath, 'wb') as f:
             f.write(response.content)
 
@@ -72,6 +73,7 @@ def download_rom(full_url, filename):
     except Exception as e:
         print(f"❌ Failed to download {filename}: {e}")
 
+# Load games from JSON
 with open('rom_data.json') as json_file:
     games = json.load(json_file)
 
