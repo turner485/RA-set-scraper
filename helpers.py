@@ -1,5 +1,5 @@
 import re
-
+import urllib.parse
 rom_sources = {
     "Game Boy Advance": [
         "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Advance/",
@@ -23,27 +23,51 @@ rom_sources = {
     "SNES/Super Famicom": [
         "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/"
     ],
+    "Genesis/Mega Drive": [
+        "https://myrient.erista.me/files/No-Intro/Sega%20-%20Mega%20Drive%20-%20Genesis/"
+    ],
+    
 }
 
 def clean_title(raw_title: str) -> str:
-    # Check if angle brackets exist and extract their content
-    angle_bracket_match = re.search(r'<([^>]*)>', raw_title)
-    if angle_bracket_match:
-        # Use content inside angle brackets as base title
-        title = angle_bracket_match.group(1)
-    else:
-        title = raw_title
+    # Decode URL-encoded characters (e.g., %20 → space, %28 → (, etc.)
+    title = urllib.parse.unquote(raw_title)
 
-    # Remove file extension at the end of the title
+    # Extract content inside angle brackets (if present)
+    angle_bracket_match = re.search(r'<([^>]*)>', title)
+    if angle_bracket_match:
+        title = angle_bracket_match.group(1)
+
+    # Remove file extension
     title = re.sub(r'\.[a-z0-9]+$', '', title, flags=re.IGNORECASE)
 
-    # Remove parentheses and contents inside them
-    title = re.sub(r'\([^)]*\)', '', title)
+    # Remove contents inside parentheses or brackets
+    title = re.sub(r'\([^)]*\)', '', title)  # remove (content)
+    title = re.sub(r'\[[^\]]*\]', '', title)  # optionally remove [content] too
 
-    # Remove any extra spaces
-    title = title.strip()
+    # Collapse multiple spaces into one
+    title = re.sub(r'\s+', ' ', title)
 
-    # Optional: Remove trailing hyphens and spaces
+    # Remove trailing dashes and spaces
     title = re.sub(r'[-–—]\s*$', '', title).strip()
 
     return title
+
+def clean_filename(filename: str) -> str:
+    # Decode URL-encoded characters
+    filename = urllib.parse.unquote(filename)
+
+    # Remove contents inside parentheses or brackets
+    filename = re.sub(r'\([^)]*\)', '', filename)
+    filename = re.sub(r'\[[^\]]*\]', '', filename)
+
+    # Collapse multiple spaces into one
+    filename = re.sub(r'\s+', ' ', filename).strip()
+
+    # Replace spaces and dashes with underscores
+    filename = re.sub(r'[ \-]+', '_', filename)
+
+    # Remove leading/trailing underscores
+    filename = filename.strip('_')
+
+    return filename

@@ -2,7 +2,8 @@ import json
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from helpers import rom_sources
+from helpers import rom_sources, clean_filename
+import requests
 import os
 
 def find_rom_url(games):
@@ -41,12 +42,11 @@ def find_rom_url(games):
                         if title.lower() in link_title.lower():
                             full_url = urljoin(url, href)
                             filename = os.path.basename(href)
-
+                            filename = clean_filename(filename)
                             print(f"✅ Match found: {filename}")
                             download_rom(full_url, filename)
                             found = True
                             break
-
                 if found:
                     break  # Exit loop if we found the ROM
 
