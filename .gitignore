@@ -1,5 +1,4 @@
 *.json
-/roms
 /.venv
 /.vscode
 __pycache__
