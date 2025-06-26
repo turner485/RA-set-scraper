@@ -14,7 +14,7 @@ def make_request():
     r.raise_for_status()
     return r.json()
 
-def take_first_ten(data, n=10):
+def take_first_ten(data, n=15):
     return [data.pop(0) for _ in range(min(n, len(data)))]
 
 def write_to_file(data, filename):
