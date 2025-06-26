@@ -5,25 +5,28 @@ import requests
 import os
 from dotenv import load_dotenv  
 load_dotenv()
+import time
 
 api_key = os.environ.get('API_KEY')
 
+# Initialize the game dictionary to store games, consoles, and their hashes
 game_dict = {
     'games': [],
     'consoles': [],
     'gameHashes': []
 }
 
-suffixes = [".gba", ".nds", ".7z", ".nes", ".gbc"]
-
+# Initialize lists to store URLs, hashes, and titles
 game_urls = []
 game_hash_list = []
 game_title_list = []
 
+# Creates a list of game hashes and urls to be used later, using data from a JSON file.x
 def read_from_json(filename):
     with open(filename) as json_file:
         data = json.load(json_file)
         for game in data:
+            time.sleep(1)
             game_id = game['GameID']
             console_name = game['ConsoleName']
             game_hash_url = f"https://retroachievements.org/API/API_GetGameHashes.php?i={game_id}&y={api_key}"
@@ -33,7 +36,6 @@ def read_from_json(filename):
             game_urls.append(game_hash_url)
     return game_urls
 
-
 def read_from_url(single_game_urls):
     for url, console in zip(single_game_urls, game_dict['consoles']):
         try:
@@ -41,17 +43,17 @@ def read_from_url(single_game_urls):
             r.raise_for_status()
             data = r.json()
             game_hash_list.append(data)
+            time.sleep(1)
             results = data.get('Results', [])
             if results:
                 raw_name = results[0].get('Name', 'Unknown Title')
-
                 if console == "Arcade":
-                    # Extract arcade filename from beginning (e.g., "arkanoid.7z <Arkanoid (...)>")
-                    filename = raw_name.split()[0]  # e.g., "arkanoid.7z"
-                    rom_base_name = re.sub(r'\.[a-z0-9]+$', '', filename, flags=re.IGNORECASE)  # strip .7z
+                    filename = raw_name.split()[0] 
+                    rom_base_name = re.sub(r'\.[a-z0-9]+$', '', filename, flags=re.IGNORECASE)
                 else:
                     rom_base_name = clean_title(raw_name)
-
+                    print(f"Retreiving ROM Base Name: {rom_base_name}")
+                # Append the cleaned ROM base name to the game title list
                 game_title_list.append(rom_base_name.strip())
             else:
                 game_title_list.append('Unknown')
@@ -59,7 +61,6 @@ def read_from_url(single_game_urls):
             print(f"Failed to fetch or parse: {url}\nError: {e}")
             game_title_list.append('Error')
     return game_title_list
-
 
 def search_for_rom(game_titles, consoles):
     rom_data = []
@@ -71,6 +72,5 @@ def search_for_rom(game_titles, consoles):
 read_from_json("test.json")
 read_from_url(game_urls)
 search_for_rom(game_title_list, game_dict['consoles'])
-
 roms_data = search_for_rom(game_title_list, game_dict['consoles'])
 write_to_file(roms_data, 'rom_data.json')
