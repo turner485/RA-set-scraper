@@ -1,19 +1,18 @@
 import unittest
+import make_request
+from make_request import make_request, retrieve_data, write_to_file
 from unittest.mock import patch, mock_open
-from make_request import make_request, take_first_ten, write_to_file
-
-
 class TestMakeRequest(unittest.TestCase):
 
     def test_extract_top_n(self):
         data = list(range(15))
-        top_10 = take_first_ten(data)
+        top_10 = retrieve_data(data)
         self.assertEqual(len(top_10), 10)
         self.assertEqual(top_10, list(range(10)))
 
     def test_extract_less_than_n(self):
         data = list(range(5))
-        top = take_first_ten(data)
+        top = retrieve_data(data)
         self.assertEqual(len(top), 5)
         self.assertEqual(top, list(range(5)))
 
