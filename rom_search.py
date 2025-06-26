@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 from helpers import rom_sources, clean_filename
 import requests
 import os
+import time
 
 def find_rom_url(games):
     for game in games:
@@ -26,8 +27,9 @@ def find_rom_url(games):
 
         for url in source_urls:
             try:
+                time.sleep(1)
                 response = requests.get(url)
-                response.raise_for_status()  # Raise an error if bad response
+                response.raise_for_status()
 
                 print(f"🌐 Accessing: {url}")
                 soup = BeautifulSoup(response.content, 'html.parser')
@@ -48,7 +50,7 @@ def find_rom_url(games):
                             found = True
                             break
                 if found:
-                    break  # Exit loop if we found the ROM
+                    break  
 
             except Exception as e:
                 print(f"❌ Error accessing or parsing {url}: {e}")
@@ -67,14 +69,14 @@ def download_rom(full_url, filename):
 
         with open(filepath, 'wb') as f:
             f.write(response.content)
-
+            
         print(f"📥 Downloaded: {filename}")
 
     except Exception as e:
         print(f"❌ Failed to download {filename}: {e}")
 
-# Load games from JSON
-with open('rom_data.json') as json_file:
+
+with open('./data/rom_data.json') as json_file:
     games = json.load(json_file)
 
 find_rom_url(games)

@@ -69,8 +69,8 @@ def search_for_rom(game_titles, consoles):
     return rom_data
 
 # Call sequence
-read_from_json("test.json")
+read_from_json("./data/most_recent_claim.json")
 read_from_url(game_urls)
 search_for_rom(game_title_list, game_dict['consoles'])
 roms_data = search_for_rom(game_title_list, game_dict['consoles'])
-write_to_file(roms_data, 'rom_data.json')
+write_to_file(roms_data, './data/rom_data.json')
