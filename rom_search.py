@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from helpers import rom_sources, clean_filename
+from rich.progress import Progress
 import requests
 import os
 import time
@@ -61,20 +62,27 @@ def find_rom_url(games):
 def download_rom(full_url, filename):
     print(f"⬇️ Downloading from {full_url} ...")
     try:
-        response = requests.get(full_url)
+        response = requests.get(full_url, stream=True)
         response.raise_for_status()
 
+        total_size = int(response.headers.get('Content-Length', 0))
         os.makedirs("roms", exist_ok=True)
+
+        filename = clean_filename(filename)
         filepath = os.path.join("roms", filename)
 
-        with open(filepath, 'wb') as f:
-            f.write(response.content)
-            
-        print(f"📥 Downloaded: {filename}")
+        with open(filepath, 'wb') as f, Progress() as progress:
+            task = progress.add_task(f"📥 {filename}", total=total_size)
+
+            for chunk in response.iter_content(chunk_size=1024):
+                if chunk:
+                    f.write(chunk)
+                    progress.update(task, advance=len(chunk))
+
+        print(f"✅ Downloaded: {filename}")
 
     except Exception as e:
         print(f"❌ Failed to download {filename}: {e}")
-
 
 with open('./data/rom_data.json') as json_file:
     games = json.load(json_file)
