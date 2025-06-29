@@ -43,24 +43,43 @@ def read_from_url(single_game_urls):
             r.raise_for_status()
             data = r.json()
             game_hash_list.append(data)
-            time.sleep(1)
+
             results = data.get('Results', [])
-            if results:
-                raw_name = results[0].get('Name', 'Unknown Title')
-                if console == "Arcade":
-                    filename = raw_name.split()[0] 
-                    rom_base_name = re.sub(r'\.[a-z0-9]+$', '', filename, flags=re.IGNORECASE)
-                else:
-                    rom_base_name = clean_title(raw_name)
-                    print(f"Retreiving ROM Base Name: {rom_base_name}")
-                # Append the cleaned ROM base name to the game title list
-                game_title_list.append(rom_base_name.strip())
-            else:
+            if not results:
                 game_title_list.append('Unknown')
+                continue
+
+            # Filter out patched ROMs (PatchUrl is not None)
+            clean_results = [res for res in results if not res.get('PatchUrl')]
+
+            if len(clean_results) == 0:
+                # No clean ROMs, fallback to all results
+                selected_result = results[0]
+            elif len(clean_results) == 1:
+                selected_result = clean_results[0]
+            else:
+                # Multiple clean results, pick the first (or apply further logic if needed)
+                selected_result = clean_results[0]
+
+            raw_name = selected_result.get('Name', 'Unknown Title')
+
+            if console == "Arcade":
+                filename = raw_name.split()[0]
+                rom_base_name = re.sub(r'\.[a-z0-9]+$', '', filename, flags=re.IGNORECASE)
+            else:
+                rom_base_name = clean_title(raw_name)
+                print(f"Retrieving ROM Base Name: {rom_base_name}")
+
+            game_title_list.append(rom_base_name.strip())
+
+            time.sleep(0.5)
+
         except Exception as e:
             print(f"Failed to fetch or parse: {url}\nError: {e}")
             game_title_list.append('Error')
+
     return game_title_list
+
 
 def search_for_rom(game_titles, consoles):
     rom_data = []

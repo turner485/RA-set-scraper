@@ -2,6 +2,9 @@ import re
 import urllib.parse
 
 rom_sources = {
+    "PlayStation 2": [
+        "https://myrient.erista.me/files/Redump/Sony%20-%20PlayStation%202/"
+    ],
     "Game Boy Advance": [
         "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Advance/",
         "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Advance%20(Multiboot)/",
@@ -59,8 +62,8 @@ rom_sources = {
     "SNK NEO GEO CD": [
         "https://myrient.erista.me/files/Redump/SNK%20-%20Neo%20Geo%20CD/"
     ],
-    "PCE CD": [
-        "https://myrient.erista.me/files/Internet%20Archive/chadmaster/pcecd-chd-zstd-redump/pcecd-chd-zstd/"
+    "PC Engine CD/TurboGrafx-CD": [
+        "https://myrient.erista.me/files/Redump/NEC%20-%20PC%20Engine%20CD%20&%20TurboGrafx%20CD/"
     ],
 }
 
@@ -76,10 +79,6 @@ def clean_title(raw_title: str) -> str:
     # Remove file extension
     title = re.sub(r'\.[a-z0-9]+$', '', title, flags=re.IGNORECASE)
 
-    # Remove contents inside parentheses or brackets
-    title = re.sub(r'\([^)]*\)', '', title)  # remove (content)
-    title = re.sub(r'\[[^\]]*\]', '', title)  # optionally remove [content] too
-
     # Collapse multiple spaces into one
     title = re.sub(r'\s+', ' ', title)
 
@@ -91,11 +90,7 @@ def clean_title(raw_title: str) -> str:
 def clean_filename(filename: str) -> str:
     # Decode URL-encoded characters
     filename = urllib.parse.unquote(filename)
-
-    # Remove contents inside parentheses or brackets
-    filename = re.sub(r'\([^)]*\)', '', filename)
-    filename = re.sub(r'\[[^\]]*\]', '', filename)
-
+    
     # Collapse multiple spaces into one
     filename = re.sub(r'\s+', ' ', filename).strip()
 

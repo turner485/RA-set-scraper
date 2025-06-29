@@ -1,7 +1,6 @@
 import requests
 import json
 import os
-import time 
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -27,7 +26,6 @@ def get_top_n_recent_by_donetime(data, n=10):
 def write_to_file(data, filename):
     with open(filename, 'w') as f:
         json.dump(data, f, indent=2)
-    print(f"Wrote data to {filename}")
 
 def main():
     game_data = make_request()
