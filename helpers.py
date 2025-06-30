@@ -71,11 +71,6 @@ def clean_title(raw_title: str) -> str:
     # Decode URL-encoded characters (e.g., %20 → space, %28 → (, etc.)
     title = urllib.parse.unquote(raw_title)
 
-    # Extract content inside angle brackets (if present)
-    angle_bracket_match = re.search(r'<([^>]*)>', title)
-    if angle_bracket_match:
-        title = angle_bracket_match.group(1)
-
     # Remove file extension
     title = re.sub(r'\.[a-z0-9]+$', '', title, flags=re.IGNORECASE)
 
@@ -90,14 +85,8 @@ def clean_title(raw_title: str) -> str:
 def clean_filename(filename: str) -> str:
     # Decode URL-encoded characters
     filename = urllib.parse.unquote(filename)
-    
-    # Collapse multiple spaces into one
-    filename = re.sub(r'\s+', ' ', filename).strip()
 
     # Replace spaces and dashes with underscores
     filename = re.sub(r'[ \-]+', '_', filename)
-
-    # Remove leading/trailing underscores
-    filename = filename.strip('_')
 
     return filename
