@@ -47,7 +47,7 @@ def find_rom_url(games):
                             filename = os.path.basename(href)
                             filename = clean_filename(filename)
                             print(f"✅ Match found: {filename}")
-                            download_rom(full_url, filename)
+                            download_rom(full_url, filename, game)  # Pass the current game
                             found = True
                             break
                 if found:
@@ -59,17 +59,19 @@ def find_rom_url(games):
         if not found:
             print("❌ No match found in any source.")
 
-def download_rom(full_url, filename):
+def download_rom(full_url, filename, game):
+    console = game['console']
     print(f"⬇️ Downloading from {full_url} ...")
     try:
         response = requests.get(full_url, stream=True)
         response.raise_for_status()
 
         total_size = int(response.headers.get('Content-Length', 0))
-        os.makedirs("roms", exist_ok=True)
+        # Create directory for the console
+        os.makedirs(os.path.join("roms", console), exist_ok=True)
 
         filename = clean_filename(filename)
-        filepath = os.path.join("roms", filename)
+        filepath = os.path.join("roms", console, filename)
 
         with open(filepath, 'wb') as f, Progress() as progress:
             task = progress.add_task(f"📥 {filename}", total=total_size)
