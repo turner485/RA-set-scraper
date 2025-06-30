@@ -51,7 +51,7 @@ rom_sources = {
         "https://myrient.erista.me/files/Redump/Sega%20-%20Mega%20CD%20&%20Sega%20CD/"
     ],
     "32X": [
-        "https://myrient.erista.me/files/No-Intro/Sega%20-%2032X/"
+        "https://myrient.erista.me/files/No-Intro/Sega%20-%2032X/ "
     ],
     "Sega Game Gear": [
         "https://myrient.erista.me/files/No-Intro/Sega%20-%20Game%20Gear/"
