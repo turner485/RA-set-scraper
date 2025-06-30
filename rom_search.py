@@ -75,7 +75,7 @@ def download_rom(full_url, filename, game):
         # Check if file already exists
         if os.path.exists(filepath):
             print(f"⚠️ Skipped (already downloaded): {filename}")
-            return  
+            return
 
         total_size = int(response.headers.get('Content-Length', 0))
 
