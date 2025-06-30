@@ -40,7 +40,7 @@ A Python toolchain for scraping recent RetroAchievements game claims, extracting
    pip install -r requirements.txt
    ```
 
-3. **Configure API Key**
+3. **Add your API Key**
    Create a .env file in the root directory with your RetroAchievements API key:
    ```
    API_KEY = "your_api_key_here"
