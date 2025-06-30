@@ -28,7 +28,7 @@ def find_rom_url(games):
 
         for url in source_urls:
             try:
-                time.sleep(1)
+                time.sleep(0.5)
                 response = requests.get(url)
                 response.raise_for_status()
 
@@ -66,12 +66,18 @@ def download_rom(full_url, filename, game):
         response = requests.get(full_url, stream=True)
         response.raise_for_status()
 
-        total_size = int(response.headers.get('Content-Length', 0))
         # Create directory for the console
         os.makedirs(os.path.join("roms", console), exist_ok=True)
 
         filename = clean_filename(filename)
         filepath = os.path.join("roms", console, filename)
+
+        # Check if file already exists
+        if os.path.exists(filepath):
+            print(f"⚠️ Skipped (already downloaded): {filename}")
+            return
+
+        total_size = int(response.headers.get('Content-Length', 0))
 
         with open(filepath, 'wb') as f, Progress() as progress:
             task = progress.add_task(f"📥 {filename}", total=total_size)

@@ -68,7 +68,7 @@ def read_from_url(single_game_urls):
                 rom_base_name = re.sub(r'\.[a-z0-9]+$', '', filename, flags=re.IGNORECASE)
             else:
                 rom_base_name = clean_title(raw_name)
-                print(f"Retrieving ROM Base Name: {rom_base_name}")
+                print(f"Retrieving ROM Base Name: {rom_base_name} for {console}")
 
             game_title_list.append(rom_base_name.strip())
 
