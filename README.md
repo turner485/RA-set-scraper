@@ -45,6 +45,11 @@ A Python toolchain for scraping recent RetroAchievements game claims, extracting
    ```
    API_KEY = "your_api_key_here"
    ```
+4. **Add your API Key**
+   Add your ROM output path to the .env:
+   ```
+   API_KEY = "your_api_key_here"
+   ```
 
 ## Usage
 
@@ -52,7 +57,9 @@ A Python toolchain for scraping recent RetroAchievements game claims, extracting
    ```sh
    python make_request.py
    ```
-   This creates most_recent_claim.json.
+   This creates most_recent_claim.json. <br />
+   **running this will prompt you for the number of roms you want to download.**
+
 
 2. **Process claims and fetch ROM metadata**
    ```sh

@@ -1,5 +1,4 @@
 import json
-import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from helpers import rom_sources, clean_filename
@@ -7,9 +6,13 @@ from rich.progress import Progress
 import requests
 import os
 import time
+from dotenv import load_dotenv
 
-def find_rom_url(games):
-    for game in games:
+load_dotenv()
+directory_path = os.environ.get('DIRECTORY_PATH')
+
+def find_rom_url(games__):
+    for game in games__:
         console = game['console']
         title = game['title']
 
@@ -67,10 +70,11 @@ def download_rom(full_url, filename, game):
         response.raise_for_status()
 
         # Create directory for the console
-        os.makedirs(os.path.join("roms", console), exist_ok=True)
+        os.makedirs(os.path.join(directory_path, "roms", console), exist_ok=True)
 
         filename = clean_filename(filename)
-        filepath = os.path.join("roms", console, filename)
+
+        filepath = os.path.join(directory_path, "roms", console, filename)
 
         # Check if file already exists
         if os.path.exists(filepath):

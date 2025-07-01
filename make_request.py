@@ -8,14 +8,15 @@ load_dotenv()
 api_key = os.environ.get('API_KEY')
 API_URL = f"https://retroachievements.org/API/API_GetClaims.php?k=1&y={api_key}"
 
+
 def make_request():
     r = requests.get(API_URL)
     r.raise_for_status()
     return r.json()
 
-# Find the most recent claim based on DoneTime
-def get_top_n_recent_by_donetime(data, n=10):
-    # Ensure DoneTime exists and sort in descending order
+def get_top_n_recent_by_donetime(data, n=None):
+    if n is None:
+        n = int(input("Please enter the number of recent ROMS\nYou want to collect? "))
     sorted_data = sorted(
         data,
         key=lambda entry: entry.get("DoneTime", ""),
