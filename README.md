@@ -1,4 +1,4 @@
-# RetroAchievements most recent set game collector v1.00.0
+# RetroAchievements most recent set game collector v1.00.1
 This RetroAchievement new set game collector will search & download new games and organise them by console, due to the complexity and sheer amount of "faff" 😆 this application will only download RETAIL games, all hacks, unlicensed & homebrews will not be downloaded.<br/><br/>
 ![screen1](https://github.com/user-attachments/assets/885e6bf8-e9c5-4eef-bd1d-1b39597be690)
 
