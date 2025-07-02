@@ -1,6 +1,6 @@
 # RetroAchievements most recent set game collector v1.00.0
 This RetroAchievement new set game collector will search & download new games and organise them by console, due to the complexity and sheer amount of "faff" 😆 this application will only download RETAIL games, all hacks, unlicensed & homebrews will not be downloaded.<br/><br/>
-![RetroAchievements Set scraper](.\readme-img\screen1.png "a title")
+![screen1](https://github.com/user-attachments/assets/885e6bf8-e9c5-4eef-bd1d-1b39597be690)
 
 > **Note:** This application is distributed as a standalone `.exe` file. You do **not** need to install Python or any dependencies.
 
@@ -17,25 +17,23 @@ This RetroAchievement new set game collector will search & download new games an
 https://retroachievements.org/settings
 ---
 
+
 ### Running the Executable 🏃
 1. When you run the .exe; you will be greeted by this window;<br><br>
-![RetroAchievements Set scraper](.\readme-img\screen2.png "a title")
+![screen2](https://github.com/user-attachments/assets/13d01658-7c8f-41e6-9a4d-c5f16cb05fac)
 - Here you can define the number of roms you want and set the location in which you want to store them on your local drive. 📁📁📁
 2. You can then filter the consoles in which the games are downloaded 🎮🎮
 <br><br>
-![RetroAchievements Set scraper](.\readme-img\screen3.png "a title")
-
+![screen3](https://github.com/user-attachments/assets/9e84ef7b-3b05-41a3-a556-54b33ef82ee8)
 3. click the start collecting button to run the application 🚀🚀🚀;
 <br><br>
-![RetroAchievements Set scraper](.\readme-img\screen4.png "a title")
-
+![screen4](https://github.com/user-attachments/assets/64552d00-75e5-485a-b24e-bc1c65431f0f)
 4. Finally sit back, relax and wait, you can see the downloading progress in terminal ☕☕☕;
-<br><br>
-![RetroAchievements Set scraper](.\readme-img\screen6.png "a title")
-
+<br><br>![screen6](https://github.com/user-attachments/assets/ca7fb9f0-66bf-4be7-a0a2-1df66d885943)
 - The GUI also has a settings tab, here you can set your API key (if you haven't already done so) ⚙️⚙️
 <br><br>
-![RetroAchievements Set scraper](.\readme-img\screen5.png "GUI Settings Tab")
+![screen5](https://github.com/user-attachments/assets/c1fe6a15-118d-4147-acf0-c990b31e1fcd)
+
 ---
 
 ### Troubleshooting
