@@ -378,8 +378,8 @@ class ROMCollectorGUI(QMainWindow):
         for i, console in enumerate(consoles):
             checkbox = QCheckBox(console)
             self.console_checkboxes[console] = checkbox
-            row = i // 3
-            col = i % 3
+            row = i // 6
+            col = i % 6
             scroll_layout.addWidget(checkbox, row, col)
         
         scroll_widget.setLayout(scroll_layout)
