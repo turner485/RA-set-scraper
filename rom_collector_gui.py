@@ -36,41 +36,67 @@ class ROMCollectorWorker(QThread):
         self.api_key = api_key
         self.selected_consoles = selected_consoles or []
         self.rom_sources = {
-            "PlayStation 2": ["https://myrient.erista.me/files/Redump/Sony%20-%20PlayStation%202/"],
-            "PlayStation": ["https://myrient.erista.me/files/Redump/Sony%20-%20PlayStation/"],
-            "Saturn": [
-                "https://myrient.erista.me/files/Internet%20Archive/chadmaster/chd_saturn/CHD-Saturn/USA/",
-                "https://myrient.erista.me/files/Internet%20Archive/chadmaster/chd_saturn/CHD-Saturn/Japan/"
-            ],
+            # Nintendo consoles
+            "Game Boy Color": ["https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Color/"],
+            "Game Boy": ["https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy/"],
             "Game Boy Advance": [
                 "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Advance/",
                 "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Advance%20(Multiboot)/",
                 "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Advance%20(Video)/",
                 "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Advance%20(e-Reader)/"
             ],
+            "NES/Famicom": [
+                "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20(Headered)/",
+                "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20(Headerless)/"
+            ],
+            "SNES/Super Famicom": ["https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/"],
             "Nintendo 64": [
                 "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%2064%20(BigEndian)/",
                 "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%2064%20(ByteSwapped)/",
-                "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%2064DD/"
+                "https://myrient.erista.me/files/Internet%20Archive/Unknown/RedumpNintendoGameCubeAmericaPart3/",
+                "https://myrient.erista.me/files/Internet%20Archive/kodi_amp_spmc_canada/EuropeanGamecubeCollectionByGhostware/"
+            ],
+            "GameCube": [
+                "https://myrient.erista.me/files/Internet%20Archive/Unknown/RedumpNintendoGameCubeAmerica/",
+                "https://myrient.erista.me/files/Internet%20Archive/Unknown/RedumpNintendoGameCubeAmericaPart2/",
+                "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20DS%20(Download%20Play)/"
             ],
             "Nintendo DS": [
                 "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20DS%20(Decrypted)/",
                 "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20DS%20(Encrypted)/",
                 "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20DS%20(Download%20Play)/"
             ],
-            "NES/Famicom": [
-                "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20(Headered)/",
-                "https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20Entertainment%20System%20(Headerless)/"
-            ],
-            "Arcade": ["https://myrient.erista.me/files/Internet%20Archive/chadmaster/fbnarcade-fullnonmerged/arcade/"],
-            "Game Boy Color": ["https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy%20Color/"],
-            "Game Boy": ["https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Game%20Boy/"],
-            "SNES/Super Famicom": ["https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/"],
+            # Sony consoles
+            "PlayStation": ["https://myrient.erista.me/files/Redump/Sony%20-%20PlayStation/"],
+            "PlayStation 2": ["https://myrient.erista.me/files/Redump/Sony%20-%20PlayStation%202/"],
+            "PlayStation Portable": ["https://myrient.erista.me/files/Redump/Sony%20-%20PlayStation%20Portable/"],
+            # Atari consoles
+            "Atari 2600": ["https://myrient.erista.me/files/No-Intro/Atari%20-%202600/"],
+            "Atari 7800": ["https://myrient.erista.me/files/No-Intro/Atari%20-%207800/"],
+            "Atari Jaguar": ["https://myrient.erista.me/files/Internet%20Archive/chadmaster/jagcd-chd-zstd/jagcd-chd-zstd/"],
+            "Atari Jaguar CD": ["https://myrient.erista.me/files/Redump/Atari%20-%20Jaguar%20CD%20Interactive%20Multimedia%20System/"],
+            # Sega consoles
+            "Master System": ["https://myrient.erista.me/files/No-Intro/Sega%20-%20Master%20System%20-%20Mark%20III/"],
+            "Game Gear": ["https://myrient.erista.me/files/No-Intro/Sega%20-%20Game%20Gear/"],
             "Genesis/Mega Drive": ["https://myrient.erista.me/files/No-Intro/Sega%20-%20Mega%20Drive%20-%20Genesis/"],
             "Sega CD": ["https://myrient.erista.me/files/Redump/Sega%20-%20Mega%20CD%20&%20Sega%20CD/"],
             "32X": ["https://myrient.erista.me/files/No-Intro/Sega%20-%2032X/"],
-            "Sega Game Gear": ["https://myrient.erista.me/files/No-Intro/Sega%20-%20Game%20Gear/"],
-            "Sega Master System": ["https://myrient.erista.me/files/No-Intro/Sega%20-%20Master%20System%20-%20Mark%20III/"],
+            "Saturn": [
+                "https://myrient.erista.me/files/Internet%20Archive/chadmaster/chd_saturn/CHD-Saturn/USA/",
+                "https://myrient.erista.me/files/Internet%20Archive/chadmaster/chd_saturn/CHD-Saturn/Japan/"
+            ],
+            "Dreamcast": [
+                "https://myrient.erista.me/files/Internet%20Archive/chadmaster/dc-chd-zstd-redump/dc-chd-zstd/",
+            ],
+            # NEC consoles
+            "PC Engine/TurboGrafx-16": ["https://myrient.erista.me/files/No-Intro/NEC%20-%20PC%20Engine%20-%20TurboGrafx-16/"],
+            "PC Engine CD/TurboGrafx-CD": ["https://myrient.erista.me/files/Redump/NEC%20-%20PC%20Engine%20CD%20&%20TurboGrafx%20CD/"],
+            # SNK consoles
+            "Neo Geo CD": ["https://myrient.erista.me/files/Redump/SNK%20-%20Neo%20Geo%20CD/"],
+            "Neo Geo Pocket": ["https://myrient.erista.me/files/No-Intro/SNK%20-%20NeoGeo%20Pocket%20Color/"],
+            # Misc.
+            "Arcade": ["https://myrient.erista.me/files/Internet%20Archive/chadmaster/fbnarcade-fullnonmerged/arcade/"],
+            
         }
 
     def run(self):
@@ -346,13 +372,8 @@ class ROMCollectorGUI(QMainWindow):
         scroll_layout = QGridLayout(scroll_widget)
         
         self.console_checkboxes = {}
-        consoles = [
-            "PlayStation 2", "PlayStation", "Saturn", "Game Boy Advance",
-            "Nintendo 64", "Nintendo DS", "NES/Famicom", "Arcade",
-            "Game Boy Color", "Game Boy", "SNES/Super Famicom",
-            "Genesis/Mega Drive", "Sega CD", "32X", "Sega Game Gear",
-            "Sega Master System"
-        ]
+        consoles = ["Game Boy Color", "Game Boy", "Game Boy Advance", "NES/Famicom", "SNES/Super Famicom", "Nintendo 64", "GameCube", "Nintendo DS", "PlayStation", "PlayStation 2", "PlayStation Portable", "Atari 2600", "Atari 7800", "Atari Jaguar", "Atari Jaguar CD", "Master System", "Game Gear", "Genesis/Mega Drive", "Sega CD", "32X", "Saturn", "Dreamcast", "PC Engine/TurboGrafx-16", "PC Engine CD/TurboGrafx-CD", "Neo Geo CD", "Neo Geo Pocket", "Arcade"]
+
         
         for i, console in enumerate(consoles):
             checkbox = QCheckBox(console)
