@@ -8,3 +8,5 @@ __pycache__
 *.7z
 *.rar
 *.tar.gz
+/build
+/dist
