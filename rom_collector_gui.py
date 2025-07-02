@@ -114,7 +114,7 @@ class ROMCollectorWorker(QThread):
                 time.sleep(0.5)
             
             # Step 4: Get ROM titles
-            self.progress_update.emit("🔍 Retrieving ROM titles...")
+            self.progress_update.emit("🔍 Retrieving Game titles...")
             self.progress_percent.emit(50)
             
             game_title_list = []
@@ -152,7 +152,7 @@ class ROMCollectorWorker(QThread):
                     game_title_list.append('Error')
             
             # Step 5: Search and download ROMs
-            self.progress_update.emit("⬇️ Starting ROM downloads...")
+            self.progress_update.emit("⬇️ Starting Game downloads...")
             self.progress_percent.emit(70)
             
             downloaded_count = 0
@@ -168,7 +168,7 @@ class ROMCollectorWorker(QThread):
                 self.progress_percent.emit(progress)
             
             self.progress_percent.emit(100)
-            self.finished.emit(f"✅ Process completed! Downloaded {downloaded_count} ROMs")
+            self.finished.emit(f"✅ Process completed! Downloaded {downloaded_count} Games")
             
         except Exception as e:
             self.error.emit(str(e))
@@ -188,7 +188,7 @@ class ROMCollectorWorker(QThread):
     def find_and_download_rom(self, title, console):
         source_urls = self.rom_sources.get(console)
         if not source_urls:
-            self.progress_update.emit(f"⚠️ No ROM source for console: {console}")
+            self.progress_update.emit(f"⚠️ No Game source for console: {console}")
             return False
         
         if isinstance(source_urls, str):
@@ -231,7 +231,7 @@ class ROMCollectorWorker(QThread):
             response = requests.get(full_url, stream=True)
             response.raise_for_status()
             
-            console_dir = os.path.join(self.download_path, "roms", console)
+            console_dir = os.path.join(self.download_path, "Games", console)
             os.makedirs(console_dir, exist_ok=True)
             
             filepath = os.path.join(console_dir, filename)
@@ -266,7 +266,7 @@ class ROMCollectorWorker(QThread):
 class ROMCollectorGUI(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("ROM Collector - RetroAchievements Edition")
+        self.setWindowTitle("RetroAchievements Game Collector v1.00.1")
         self.setGeometry(100, 100, 900, 700)
         
         # Initialize variables
@@ -287,7 +287,7 @@ class ROMCollectorGUI(QMainWindow):
         
         # Main tab
         main_tab = QWidget()
-        tab_widget.addTab(main_tab, "ROM Collector")
+        tab_widget.addTab(main_tab, "Game Collector")
         
         # Settings tab
         settings_tab = QWidget()
@@ -307,7 +307,7 @@ class ROMCollectorGUI(QMainWindow):
         layout = QVBoxLayout(parent)
         
         # Title
-        title = QLabel("RetroAchievements ROM Collector")
+        title = QLabel("RetroAchievements Game Collector")
         title.setFont(QFont("Arial", 16, QFont.Bold))
         title.setStyleSheet("color: #2c3e50; margin: 10px 0;")
         layout.addWidget(title)
@@ -317,7 +317,7 @@ class ROMCollectorGUI(QMainWindow):
         input_layout = QGridLayout(input_group)
         
         # Number of ROMs
-        input_layout.addWidget(QLabel("Number of recent ROMs:"), 0, 0)
+        input_layout.addWidget(QLabel("Number of recent Games:"), 0, 0)
         self.rom_count_spin = QSpinBox()
         self.rom_count_spin.setRange(1, 100)
         self.rom_count_spin.setValue(10)
@@ -639,7 +639,7 @@ class ROMCollectorGUI(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
-    app.setApplicationName("ROM Collector")
+    app.setApplicationName("RetroAchievements Game Collector")
     app.setApplicationVersion("1.0")
     
     # Set application style
