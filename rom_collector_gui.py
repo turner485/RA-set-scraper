@@ -292,7 +292,7 @@ class ROMCollectorWorker(QThread):
 class ROMCollectorGUI(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("RetroAchievements Game Collector v1.00.1")
+        self.setWindowTitle("RetroAchievements Game Collector v1.00.4")
         self.setGeometry(100, 100, 900, 700)
         
         # Initialize variables
@@ -661,7 +661,7 @@ class ROMCollectorGUI(QMainWindow):
 def main():
     app = QApplication(sys.argv)
     app.setApplicationName("RetroAchievements Game Collector")
-    app.setApplicationVersion("1.0")
+    app.setApplicationVersion("1.00.4")
     
     # Set application style
     app.setStyleSheet("""
