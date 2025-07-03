@@ -292,7 +292,7 @@ class ROMCollectorWorker(QThread):
 class ROMCollectorGUI(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("RetroAchievements Game Collector v1.00.4")
+        self.setWindowTitle("RetroAchievements Game Collector v1.00.5")
         self.setGeometry(100, 100, 900, 700)
         
         # Initialize variables
@@ -313,7 +313,7 @@ class ROMCollectorGUI(QMainWindow):
         
         # Main tab
         main_tab = QWidget()
-        tab_widget.addTab(main_tab, "Game Collector")
+        tab_widget.addTab(main_tab, "Most Recent Sets")
         
         # Settings tab
         settings_tab = QWidget()
@@ -333,13 +333,13 @@ class ROMCollectorGUI(QMainWindow):
         layout = QVBoxLayout(parent)
         
         # Title
-        title = QLabel("RetroAchievements Game Collector")
+        title = QLabel("RetroAchievements Most Recent Sets")
         title.setFont(QFont("Arial", 16, QFont.Bold))
         title.setStyleSheet("color: #2c3e50; margin: 10px 0;")
         layout.addWidget(title)
         
         # Input section
-        input_group = QGroupBox("Collection Settings")
+        input_group = QGroupBox("Search Settings")
         input_layout = QGridLayout(input_group)
         
         # Number of ROMs
@@ -402,7 +402,7 @@ class ROMCollectorGUI(QMainWindow):
         layout.addWidget(console_group)
         
         # Progress section
-        progress_group = QGroupBox("Progress")
+        progress_group = QGroupBox("Progress Console")
         progress_layout = QVBoxLayout(progress_group)
         
         self.progress_bar = QProgressBar()
@@ -420,7 +420,7 @@ class ROMCollectorGUI(QMainWindow):
         # Control buttons
         button_layout = QHBoxLayout()
         
-        self.start_btn = QPushButton("🚀 Start Collection")
+        self.start_btn = QPushButton("Start Search 🚀")
         self.start_btn.setStyleSheet("""
             QPushButton {
                 background-color: #3498db;
@@ -477,7 +477,7 @@ class ROMCollectorGUI(QMainWindow):
         layout.addWidget(api_group)
         
         # Environment file section
-        env_group = QGroupBox("Environment File")
+        env_group = QGroupBox("Environment File Example (.env)")
         env_layout = QVBoxLayout(env_group)
         
         env_info = QLabel(

@@ -1,8 +1,23 @@
-# RetroAchievements most recent set game collector v1.00.1
+# RetroAchievements most recent set game collector v1.00.5
 This RetroAchievement new set game collector will search & download new games and organise them by console, due to the complexity and sheer amount of "faff" 😆 this application will only download RETAIL games, all hacks, unlicensed & homebrews will not be downloaded.<br/><br/>
 ![screen1](https://github.com/user-attachments/assets/885e6bf8-e9c5-4eef-bd1d-1b39597be690)
 
 > **Note:** This application is distributed as a standalone `.exe` file. You do **not** need to install Python or any dependencies.
+
+Search supports collection for the following consoles:
+
+Search supports collection for the following consoles:
+
+| Nintendo                | PlayStation         | Sega                | Atari           | NEC                | Misc.      |
+|-------------------------|--------------------|---------------------|-----------------|--------------------------|-------------|
+| Game Boy Color          | PlayStation        | Master System       | Atari 2600      | PC Engine/TurboGrafx-16  | Arcade      |
+| Game Boy                | PlayStation 2      | Game Gear           | Atari 7800      | PC Engine CD/TurboGrafx-CD|             |
+| Game Boy Advance        | PlayStation Portable| Genesis/Mega Drive | Atari Jaguar    | Neo Geo CD               |             |
+| NES/Famicom             |                    | Sega CD             | Atari Jaguar CD | Neo Geo Pocket           |             |
+| SNES/Super Famicom      |                    | 32X                 |                 |                          |             |
+| Nintendo 64             |                    | Saturn              |                 |                          |             |
+| GameCube                |                    | Dreamcast           |                 |                          |             |
+| Nintendo DS             |                    |                     |                 |                          |             |
 
 ### Requirements
 
@@ -41,4 +56,9 @@ https://retroachievements.org/settings
 - If you see errors about missing DLLs, ensure you extracted all files from the release zip.
 - If you have issues, please open an issue on GitHub or contact the author.
 ---
-version 1.00.0 
+
+### Sources
+[https://myrient.erista.me/])(https://myrient.erista.me/)
+---
+version 1.00.5
+
