@@ -6,8 +6,6 @@ This RetroAchievement new set game collector will search & download new games an
 
 Search supports collection for the following consoles:
 
-Search supports collection for the following consoles:
-
 | Nintendo                | PlayStation         | Sega                | Atari           | NEC                | Misc.      |
 |-------------------------|--------------------|---------------------|-----------------|--------------------------|-------------|
 | Game Boy Color          | PlayStation        | Master System       | Atari 2600      | PC Engine/TurboGrafx-16  | Arcade      |
