@@ -56,7 +56,7 @@ https://retroachievements.org/settings
 ---
 
 ### Sources
-[https://myrient.erista.me/])(https://myrient.erista.me/)
+[https://myrient.erista.me/](https://myrient.erista.me/)
 ---
 version 1.00.5
 
