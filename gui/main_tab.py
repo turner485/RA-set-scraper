@@ -45,12 +45,14 @@ class MainTab(QWidget):
         input_layout = QGridLayout(input_group)
 
         # Number of ROMs
-        input_layout.addWidget(QLabel("Number of recent Games:"), 0, 0)
+        label = QLabel("Number of recent Games:")
+        input_layout.addWidget(label, 0, 0)
+        
         self.rom_count_spin = QSpinBox()
         self.rom_count_spin.setRange(1, 100)
         self.rom_count_spin.setValue(10)
+        self.rom_count_spin.setFixedWidth(60)
         input_layout.addWidget(self.rom_count_spin, 0, 1)
-
 
         layout.addWidget(input_group)
 
