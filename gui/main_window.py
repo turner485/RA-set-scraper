@@ -8,6 +8,7 @@ from PyQt5.QtCore import QTimer
 
 from gui.main_tab import MainTab
 from gui.settings_tab import SettingsTab
+from gui.rom_search_tab import ROMSearchTab  # Add this import
 from core.config import Config
 
 
@@ -37,10 +38,12 @@ class ROMCollectorGUI(QMainWindow):
         
         # Create tabs
         self.main_tab = MainTab(self)
+        self.rom_search_tab = ROMSearchTab(self)  # Add this line
         self.settings_tab = SettingsTab(self)
         
         # Add tabs to widget
         tab_widget.addTab(self.main_tab, "Most Recent Sets")
+        tab_widget.addTab(self.rom_search_tab, "🔍 ROM Search")  # Add this line
         tab_widget.addTab(self.settings_tab, "Settings")
         
         # Main layout
