@@ -343,6 +343,11 @@ Console: {self.console_combo.currentData()}
         # Use the first available source for download
         if rom_data.get('sources'):
             source = rom_data['sources'][0]
+            
+            # ✅ Inject console name and download path
+            rom_data['console'] = self.console_combo.currentData()
+            rom_data['download_path'] = self.parent.get_download_path()
+            
             self.download_thread = ROMDownloadThread(rom_data, source)
             self.download_thread.progress.connect(self.download_progress.setValue)
             self.download_thread.finished.connect(self.on_download_finished)
@@ -555,10 +560,11 @@ class ROMDownloadThread(QThread):
             url = source['full_url']
             filename = f"{rom_data['name']}{rom_data['extension']}"
             
-            # Create downloads directory if it doesn't exist
-            downloads_dir = "downloads"
+            console_name = self.rom_data.get("console") or "UnknownConsole"
+            base_path = self.rom_data.get("download_path", "downloads")
+            downloads_dir = os.path.join(base_path, "Games", console_name)
             if not os.path.exists(downloads_dir):
-                os.makedirs(downloads_dir)
+                os.makedirs(downloads_dir, exist_ok=True)
                 
             filepath = os.path.join(downloads_dir, filename)
             
