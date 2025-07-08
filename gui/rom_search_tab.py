@@ -273,7 +273,7 @@ class ROMSearchTab(QWidget):
         self.rom_list.clear()
         
         for rom in self.filtered_roms:
-            display_name = f"{rom['name']} ({rom['extension']}) - {rom['size']}"
+            display_name = f"{rom['name']} ({rom['extension']})"
             item = QListWidgetItem(display_name)
             item.setData(Qt.UserRole, rom)
             self.rom_list.addItem(item)
@@ -306,7 +306,6 @@ class ROMSearchTab(QWidget):
         details = f"""
 Name: {rom_data['name']}
 Extension: {rom_data['extension']}
-Size: {rom_data['size']}
 Console: {self.console_combo.currentData()}
         """.strip()
         
@@ -517,23 +516,9 @@ class AsyncROMLoaderThread(QThread):
             if not extension:
                 continue
                 
-            # Try to get file size from the link text or sibling elements
-            size = "Unknown"
-            link_text = link.get_text(strip=True)
-            parent = link.parent
-            if parent:
-                # Look for size information in the same row
-                size_info = parent.get_text()
-                # Try to extract size (basic pattern matching)
-                import re
-                size_match = re.search(r'(\d+(?:\.\d+)?)\s*([KMGT]?B)', size_info)
-                if size_match:
-                    size = size_match.group(0)
-                    
             rom_data = {
                 'name': name,
                 'extension': extension,
-                'size': size,
                 'url': urljoin(base_url, href),
                 'sources': []  # Will be populated by calling function
             }
