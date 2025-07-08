@@ -43,7 +43,7 @@ class ROMCollectorGUI(QMainWindow):
         
         # Add tabs to widget
         tab_widget.addTab(self.main_tab, "Most Recent Sets")
-        tab_widget.addTab(self.rom_search_tab, "🔍 ROM Search")  # Add this line
+        tab_widget.addTab(self.rom_search_tab, "ROM Search")  # Add this line
         tab_widget.addTab(self.settings_tab, "Settings")
         
         # Main layout

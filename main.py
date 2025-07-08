@@ -20,7 +20,7 @@ from gui.styles import get_main_window_style
 
 def get_icon_path():
     """Get the path to the application icon"""
-    # Try different possible locations for the icon
+    # Try different possible locations for thec icon
     possible_paths = [
         './resources/ra-logo.ico',
         './resources/ra-logo.png',
