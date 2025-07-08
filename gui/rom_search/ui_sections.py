@@ -88,12 +88,21 @@ def create_rom_text_section(self):
 def create_download_section(self):
     group = QGroupBox("Download")
     layout = QHBoxLayout()
+
+    # Button (¼ width)
     self.download_btn = QPushButton("⬇️ Download Selected ROM")
-    self.download_btn.setEnabled(False)
+    self.download_btn.setEnabled(True)
     self.download_btn.setStyleSheet(get_primary_button_style())
-    layout.addWidget(self.download_btn)
+    self.download_btn.setFixedHeight(40)
+    layout.addWidget(self.download_btn, 1)  # stretch factor 1
+
+    # Progress bar (¾ width)
     self.download_progress = QProgressBar()
-    self.download_progress.setVisible(False)
-    layout.addWidget(self.download_progress)
+    self.download_progress.setVisible(True)
+    self.download_progress.setTextVisible(True)
+    self.download_progress.setFormat("%p%")
+    self.download_progress.setFixedHeight(30)
+    layout.addWidget(self.download_progress, 3)  # stretch factor 3
+
     group.setLayout(layout)
     return group
