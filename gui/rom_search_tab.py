@@ -142,18 +142,18 @@ class ROMSearchTab(QWidget):
         group = QGroupBox("Download")
         layout = QHBoxLayout()
         
-        # Selected ROM info
-        self.selected_rom_label = QLabel("No ROM selected")
-        layout.addWidget(self.selected_rom_label)
-        
-        layout.addStretch()
-        
         # Download button
         self.download_btn = QPushButton("⬇️ Download Selected ROM")
         self.download_btn.setEnabled(False)
         self.download_btn.setStyleSheet(self.get_primary_button_style())
         layout.addWidget(self.download_btn)
         
+        # Selected ROM info
+        self.selected_rom_label = QLabel("No ROM selected")
+        layout.addWidget(self.selected_rom_label)
+        
+        layout.addStretch()
+         
         # Download progress
         self.download_progress = QProgressBar()
         self.download_progress.setVisible(False)
