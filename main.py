@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from gui.main_window import ROMCollectorGUI
-from gui.rom_search_tab import ROMSearchTab
+from gui.__rom_search_tab import ROMSearchTab
 from gui.styles import get_main_window_style
 
 def get_icon_path():
