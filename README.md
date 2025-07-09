@@ -1,4 +1,4 @@
-# RetroAchievements most recent set game collector v1.00.5
+# RetroAchievements most recent set game collector v1.00.7
 This RetroAchievement new set game collector will search & download new games and organise them by console, due to the complexity and sheer amount of "faff" 😆 this application will only download RETAIL games, all hacks, unlicensed & homebrews will not be downloaded.<br/><br/>
 ![screen1](https://github.com/user-attachments/assets/885e6bf8-e9c5-4eef-bd1d-1b39597be690)
 
@@ -23,11 +23,13 @@ Search supports collection for the following consoles:
 - Internet connection
 
 ### Setup :gear:
-1. Copy .env.example to .env
-2. Edit .env with your RetroAchievements API key
-3. Run ROM_Collector.exe
+1. Run ROM_Collector.exe
+2. Navigate to settings tab
+3. Add your RetroAchievements API key
 **Your API key can be found at:**
 https://retroachievements.org/settings
+4. Browse for your destination directory
+5. Done!!!
 ---
 
 
@@ -58,5 +60,5 @@ https://retroachievements.org/settings
 ### Sources
 [https://myrient.erista.me/](https://myrient.erista.me/)
 ---
-version 1.00.5
+version 1.00.7
 

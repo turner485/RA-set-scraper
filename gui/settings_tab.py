@@ -21,7 +21,9 @@ class SettingsTab(QWidget):
         save_btn = QPushButton("💾 Save Settings")
         save_btn.clicked.connect(self.save_settings)
         layout.addWidget(save_btn)
+        self.add_version_info(layout)
         layout.addStretch()
+        
 
     def setup_api_and_path_settings(self, layout):
         group = QGroupBox("RetroAchievements Settings")
@@ -53,8 +55,6 @@ class SettingsTab(QWidget):
 
         layout.addWidget(group)
 
-    
-
     def toggle_api_key_visibility(self):
         if self.api_key_edit.echoMode() == QLineEdit.Password:
             self.api_key_edit.setEchoMode(QLineEdit.Normal)
@@ -85,5 +85,11 @@ class SettingsTab(QWidget):
         self.parent.set_api_key(api_key)
         self.parent.set_download_path(download_path)
         self.parent.config.save_config(api_key=api_key, download_path=download_path)
+        
 
         QMessageBox.information(self, "Settings Saved", "Settings saved successfully.")
+
+    def add_version_info(self, layout):
+        version_label = QLabel("Version: 1.00.7 - developed and maintained by devbenji 😎")
+        version_label.setStyleSheet("color: #7f8c8d; font-size: 8pt; font-style: italic;")
+        layout.addWidget(version_label)

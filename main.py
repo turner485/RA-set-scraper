@@ -19,18 +19,28 @@ from gui.__rom_search_tab import ROMSearchTab
 from gui.styles import get_main_window_style
 
 def get_icon_path():
-    """Get the path to the application icon"""
-    # Try different possible locations for thec icon
+    """Get the path to the application icon (PyInstaller compatible)"""
+    def resource_path(relative_path):
+        """ Get absolute path to resource, works for dev and for PyInstaller """
+        try:
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+        return os.path.join(base_path, relative_path)
+    
+    # Try different possible locations for the icon
     possible_paths = [
-        './resources/ra-logo.ico',
-        './resources/ra-logo.png',
-        os.path.join(os.path.dirname(__file__), 'resources', 'ra-logo.ico'),
-        os.path.join(os.path.dirname(__file__), 'resources', 'ra-logo.png')
+        'resources/ra-logo.ico',
+        'resources/ra-logo.png',
+        'ra-logo.ico',
+        'ra-logo.png'
     ]
     
     for path in possible_paths:
-        if os.path.exists(path):
-            return path
+        full_path = resource_path(path)
+        if os.path.exists(full_path):
+            return full_path
     
     # Return None if no icon found
     return None
@@ -42,8 +52,15 @@ def main():
     
     # Create the QApplication
     app = QApplication(sys.argv)
+    
+    # Fix Windows taskbar icon grouping
+    if sys.platform.startswith('win'):
+        import ctypes
+        myappid = 'retroachievements.romcollector.1.0.7'
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+    
     app.setApplicationName("RetroAchievements ROM Collector")
-    app.setApplicationVersion("1.00.6")
+    app.setApplicationVersion("1.00.7")
     app.setOrganizationName("RetroAchievements")
     app.setOrganizationDomain("retroachievements.org")
     
