@@ -1,4 +1,4 @@
-# RetroAchievements most recent set game collector 1.1.8-Beta
+# RetroAchievements most recent set game collector 1.1.9-Beta
 This RetroAchievement new set game collector will search & download new games and organise them by console, due to the complexity and sheer amount of "faff" 😆 this application will only download RETAIL games, all hacks, unlicensed & homebrews will not be downloaded.<br/><br/>
 ![screen1](https://github.com/user-attachments/assets/885e6bf8-e9c5-4eef-bd1d-1b39597be690)
 
@@ -64,6 +64,7 @@ https://retroachievements.org/settings
 
 #### Notes
 pyinstaller --noconfirm --onefile --windowed --icon=./resources/icon.ico RetroAchievement-Set-Scraper
-
+pyinstaller --onefile --windowed --icon=resources/ra-logo.ico --add-data "resources;resources" main.py
 ##### Version Release Notes
 - 1.1.8-Beta: Added the ability to scrape games from archive.org.
+- 1.1.9-Beta: Add ico file
