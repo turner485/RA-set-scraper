@@ -15,7 +15,7 @@ from core.config import Config
 class ROMCollectorGUI(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("RetroAchievements Game Collector v1.00.7")
+        self.setWindowTitle("RetroAchievements Game Collector v1.1.8-Beta")
         self.setGeometry(100, 100, 900, 700)
 
         # Initialize configuration

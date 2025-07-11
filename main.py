@@ -30,10 +30,10 @@ def get_icon_path():
     
     # Try different possible locations for the icon
     possible_paths = [
-        'resources/ra-logo.ico',
-        'resources/ra-logo.png',
-        'ra-logo.ico',
-        'ra-logo.png'
+        'resources/icon.ico',
+        'resources/icon.png',
+        'icon.ico',
+        'icon.png'
     ]
     
     for path in possible_paths:
@@ -59,7 +59,7 @@ def main():
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
     
     app.setApplicationName("RetroAchievements ROM Collector")
-    app.setApplicationVersion("1.00.7")
+    app.setApplicationVersion("1.1.8-Beta")
     app.setOrganizationName("RetroAchievements")
     app.setOrganizationDomain("retroachievements.org")
     

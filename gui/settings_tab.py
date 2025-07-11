@@ -90,6 +90,6 @@ class SettingsTab(QWidget):
         QMessageBox.information(self, "Settings Saved", "Settings saved successfully.")
 
     def add_version_info(self, layout):
-        version_label = QLabel("Version: 1.00.7 - developed and maintained by devbenji 😎")
+        version_label = QLabel("Version: 1.1.8-Beta - developed and maintained by devbenji 😎")
         version_label.setStyleSheet("color: #7f8c8d; font-size: 8pt; font-style: italic;")
         layout.addWidget(version_label)
