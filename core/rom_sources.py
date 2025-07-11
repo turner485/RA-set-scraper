@@ -56,10 +56,10 @@ ROM_SOURCES: Dict[str, List[str]] = {
     
     # Atari consoles
     "Atari 2600": [
-        "https://myrient.erista.me/files/No-Intro/Atari%20-%202600/"
+        "https://archive.org/download/nointro.atari-2600"
     ],
     "Atari 7800": [
-        "https://myrient.erista.me/files/No-Intro/Atari%20-%207800/"
+        "https://archive.org/download/nointro.atari-7800"
     ],
     "Atari Jaguar": [
         "https://myrient.erista.me/files/Internet%20Archive/chadmaster/jagcd-chd-zstd/jagcd-chd-zstd/"

@@ -2,6 +2,7 @@ import os
 import time
 import re
 import urllib.parse
+from urllib.parse import unquote
 import requests
 from pathlib import Path
 from bs4 import BeautifulSoup
@@ -126,43 +127,66 @@ class ROMCollectorWorker(QThread):
             self.error.emit(str(e))
     
     def find_and_download_rom(self, title, console):
-        """Find and download a ROM from available sources"""
+        """Find and download a ROM from available sources (Myrient + Archive.org)"""
         source_urls = ROM_SOURCES.get(console)
         if not source_urls:
             self.progress_update.emit(f"⚠️ No Game source for console: {console}")
             return False
-        
+
         if isinstance(source_urls, str):
             source_urls = [source_urls]
+
         
-        self.progress_update.emit(f"🔍 Searching for: {title}")
-        
+
         for url in source_urls:
             try:
                 response = requests.get(url)
                 response.raise_for_status()
-                
-                soup = BeautifulSoup(response.content, 'html.parser')
-                td_tags = soup.find_all('td', class_='link')
-                
-                for td in td_tags:
-                    a_tag = td.find('a')
-                    if a_tag:
-                        link_title = a_tag.get('title') or a_tag.text
-                        href = a_tag.get('href')
-                        
-                        if title.lower() in link_title.lower():
-                            full_url = urljoin(url, href)
-                            filename = os.path.basename(href)
-                            filename = clean_filename(filename)
-                            
-                            return self.download_rom(full_url, filename, console)
-                            
+                self.progress_update.emit(f"🔍 Searching for {title} in {url}")
+                if "archive.org" in url:
+                    soup = BeautifulSoup(response.content, 'html.parser')
+                    archive_collection = url.split("/download/")[-1].strip("/")
+
+                    for link in soup.find_all('a', href=True):
+                        href = link['href']
+                        if href in ['../', '/'] or href.endswith('/'):
+                            continue
+
+                        filename = os.path.basename(unquote(href))
+                        if not filename.lower().endswith(('.zip', '.7z', '.rar', '.nes', '.smc', '.gba', '.bin', '.iso')):
+                            continue
+
+                        if title.lower() in filename.lower():
+                            full_url = f"https://archive.org/download/{archive_collection}/{filename}"
+                            clean_name = clean_filename(filename)
+                            self.progress_update.emit(f"✅ Located {title} on Archive.org")
+                            return self.download_rom(full_url, clean_name, console)
+
+                else:
+                    # ✅ MYRIENT FORMAT
+                    myrient_soup = BeautifulSoup(response.content, 'html.parser')
+                    td_tags = myrient_soup.find_all('td', class_='link')
+                    for td in td_tags:
+                        a_tag = td.find('a')
+                        if a_tag:
+                            link_title = a_tag.get('title') or a_tag.text
+                            href = a_tag.get('href')
+
+                            if title.lower() in link_title.lower():
+                                if not url.endswith('/'):
+                                    url += '/'
+
+                                full_url = urljoin(url, href)
+                                filename = os.path.basename(href)
+                                filename = clean_filename(filename)
+                                self.progress_update.emit(f"✅ Located {title} on myrient.erista.me")
+                                return self.download_rom(full_url, filename, console)
+
                 time.sleep(0.5)
-                
+
             except Exception as e:
                 self.progress_update.emit(f"❌ Error accessing {url}: {e}")
-        
+
         self.progress_update.emit(f"❌ No match found for {title}")
         return False
     
@@ -197,7 +221,7 @@ class ROMCollectorWorker(QThread):
                             percent = int((downloaded / total_size) * 100)
                             self.download_progress.emit(filename, downloaded, total_size)
             
-            self.progress_update.emit(f"✅ Downloaded: {filename}")
+            self.progress_update.emit(f"✅ Downloaded: {filename} from {full_url}")
             return True
             
         except Exception as e:

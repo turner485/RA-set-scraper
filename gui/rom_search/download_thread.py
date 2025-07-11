@@ -47,3 +47,4 @@ class ROMDownloadThread(QThread):
                         progress = int((downloaded / total_size) * 100)
                         self.progress.emit(progress)
         return True
+

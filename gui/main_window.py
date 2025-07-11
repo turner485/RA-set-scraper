@@ -8,7 +8,7 @@ from PyQt5.QtCore import QTimer
 
 from gui.main_tab import MainTab
 from gui.settings_tab import SettingsTab
-from gui.__rom_search_tab import ROMSearchTab
+from gui.rom_search.rom_search_tab import ROMSearchTab
 from core.config import Config
 
 

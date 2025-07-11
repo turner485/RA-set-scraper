@@ -74,13 +74,35 @@ class AsyncROMLoaderThread(QThread):
     def parse_html(self, html, base_url):
         soup = BeautifulSoup(html, 'html.parser')
         roms = []
+
+        # ✅ Detect archive.org and extract collection folder correctly
+        is_archive = "archive.org" in base_url
+        archive_collection = ""
+        if is_archive:
+            # Ensure we preserve everything after "/download/"
+            # E.g., https://archive.org/download/nointro.atari-2600 => nointro.atari-2600
+            archive_collection = base_url.split("/download/")[-1].strip("/")
+
         for link in soup.find_all('a', href=True):
             href = link['href']
             if href in ['../', '/'] or href.endswith('/'):
                 continue
+
             filename = unquote(href)
             name, ext = os.path.splitext(filename)
             if not ext:
                 continue
-            roms.append({'name': name, 'extension': ext, 'url': urljoin(base_url, href)})
+
+            # ✅ Ensure archive.org link includes collection path
+            if is_archive:
+                full_url = f"https://archive.org/download/{archive_collection}/{filename}"
+            else:
+                full_url = urljoin(base_url, href)
+
+            roms.append({
+                'name': name,
+                'extension': ext,
+                'url': full_url
+            })
+
         return roms
