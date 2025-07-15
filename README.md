@@ -94,10 +94,9 @@ https://retroachievements.org/settings
 - If you have issues, please open an issue on GitHub or contact the author.
 ---
 
-### Sources
+### Sources  
 [https://myrient.erista.me/](https://myrient.erista.me/)  
 [https://archive.org/](https://archive.org/)
----
 
 #### Notes
 pyinstaller --noconfirm --onefile --windowed --icon=./resources/icon.ico RetroAchievement-Set-Scraper
