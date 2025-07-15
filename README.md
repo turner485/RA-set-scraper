@@ -62,14 +62,6 @@ Search supports collection for the following consoles:
 
 ---
 
-### Project Structure
-**main.py:** Application entry point.  
-**core:** API client, config, Game source definitions.  
-**gui:** All GUI components and styles.  
-**workers:** Background worker for Game collection.  
-**utils:** Utility functions for text and file handling.
-resources: Application icons.
-
 ### Usage
 1. Launch the application (.exe or via python main.py).
 1. Enter your RetroAchievements API key and select a download directory in the Settings tab.  
