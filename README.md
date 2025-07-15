@@ -60,11 +60,6 @@ Search supports collection for the following consoles:
 | GameCube                |                    | Dreamcast           |                 |                          |             |
 | Nintendo DS             |                    |                     |                 |                          |             |
 
-### Requirements
-
-- Windows 10 or later
-- Internet connection
-
 ---
 
 ### Project Structure
@@ -108,7 +103,8 @@ https://retroachievements.org/settings
 ---
 
 ### Sources
-[https://myrient.erista.me/](https://myrient.erista.me/)[https://archive.org/](https://archive.org/)
+[https://myrient.erista.me/](https://myrient.erista.me/)  
+[https://archive.org/](https://archive.org/)
 ---
 
 #### Notes
